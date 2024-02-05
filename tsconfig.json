@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "noImplicitAny": true,
+        "lib": ["es2019", "dom"],
+    },
+
+}
