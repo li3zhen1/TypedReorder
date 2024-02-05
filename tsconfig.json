@@ -2,7 +2,15 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "noImplicitAny": true,
-        "lib": ["es2019", "dom"],
+        "declaration": true,
+        // "emitDeclarationOnly": true,
+        "module": "CommonJS",
+        "declarationMap": true,
+        // "outFile": "./dist/index.js",
+        "outDir": "dist",
+        "lib": [
+            "ES2019",
+            "dom"
+        ],
     },
-
 }

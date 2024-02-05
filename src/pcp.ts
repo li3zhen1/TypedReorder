@@ -65,7 +65,7 @@ function pcp_flip_axes(perm: number[], pcor: number[][]) {
   return signs;
 }
 
-export function pcp(tdata: number[][], axes: number[] | null = null) {
+export function pcp(tdata: number[][], axes: number[] | null = null): [number[], number[], number[], number[][]] {
   if (!axes) {
     axes = range(tdata.length);
   }
@@ -144,7 +144,9 @@ export function parcoords_es(p: any) {
       ignored.push(d);
     }
   }
-  const [naxes, signs] = pcp(tdata, axes as any);
+  // @ts-ignore
+  const [naxes, signs] = pcp(tdata, axes);
+  // @ts-ignore
   const ndomain = naxes.concat(ignored.reverse());
   // change the order in the xscale
   p.xscale.domain(ndomain);

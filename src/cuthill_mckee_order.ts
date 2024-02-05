@@ -1,6 +1,6 @@
 import { Queue } from './queue';
 import { inverse_permutation } from './permutation';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 
 /*jshint loopfunc:true */
 export function cuthill_mckee<N extends NodeLike, L extends LinkLike<N>>(

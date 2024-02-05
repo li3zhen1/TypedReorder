@@ -3,7 +3,8 @@ import { distmax } from './dist';
 import { all_pairs_distance } from './all_pairs_distance';
 import { permute } from './permute';
 import { flatten } from './utils';
-import { NodeLike, LinkLike, Graph, LeafOrder } from '_graph';
+import { NodeLike, LinkLike, Graph, LeafOrder } from "./_graph";
+import { OptimalLeafOrder } from './optimal_leaf_order';
 
 // Converts a graph with weighted edges (weight in l.value)
 // into a distance matrix suitable for reordering with e.g.
@@ -32,12 +33,10 @@ export function graph2valuemats<N extends NodeLike, L extends LinkLike<N>>(graph
 }
 
 
-// @ts-ignore
-export function valuemats_reorder(valuemats, leaforder, comps) {
+export function valuemats_reorder(valuemats: number[][][], leaforder: OptimalLeafOrder, comps?: number[][]): number[]{
     let orders = valuemats.map(leaforder);
 
     if (comps) {
-        // @ts-ignore
         orders = orders.map((d, i) => permute(comps[i], d));
     }
     return orders.reduce(flatten);

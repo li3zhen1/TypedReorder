@@ -1,6 +1,6 @@
 import { range } from './range';
 import { inverse_permutation } from './permutation';
-import { NodeLike, LinkLike, Graph } from '_graph';
+import { NodeLike, LinkLike, Graph } from "./_graph";
 
 /**
  * Compute the bandwidth of a graph, given and order.

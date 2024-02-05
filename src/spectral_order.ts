@@ -2,7 +2,7 @@ import { fiedler_vector } from './fiedler';
 import { laplacian } from './laplacian';
 import { sort_order } from './sort_order';
 import { permute } from './permute';
-import { NodeLike, LinkLike, Graph } from '_graph';
+import { NodeLike, LinkLike, Graph } from "./_graph";
 
 export function spectral_order<N extends NodeLike, L extends LinkLike<N>>(graph: Graph<N, L>, comps: number[][]): number[] {
 

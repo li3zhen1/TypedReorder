@@ -1,5 +1,5 @@
 import { zeroes } from './aliases';
-import { NodeLike, LinkLike, Graph } from '_graph';
+import { NodeLike, LinkLike, Graph } from "./_graph";
 
 export function graph2mat<N extends NodeLike, L extends LinkLike<N>>(graph: Graph<N, L>, directed: boolean): number[][] {
 

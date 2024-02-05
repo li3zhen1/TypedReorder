@@ -419,8 +419,8 @@ export function order() {
         except = list.slice(0);
         return order;
     };
-    // @ts-ignore
-    function orderExcept(vector, i, j) {
+    
+    function orderExcept(vector: number[][], i: any, j: any) {
         const distanceMatrix = (dist().distance(distance) as any)(vector);
         let k,
             l,
@@ -432,6 +432,7 @@ export function order() {
         // TODO: check if no other pair is also ==0
         distanceMatrix[i][i + 1] = 0;
         distanceMatrix[i + 1][i] = 0;
+
         const perm = ordering().distanceMatrix(distanceMatrix)(vector);
         pos = perm.indexOf(i);
         for (k = 0; k < perm.length; k++) {

@@ -1,6 +1,6 @@
 import { inverse_permutation } from './permutation';
 import { count_in_crossings, count_out_crossings } from './adjacent_exchange';
-import { Graph, NodeLike, LinkLike } from '_graph';
+import { Graph, NodeLike, LinkLike } from "./_graph";
 
 // TODO Cite simult
 // Accorging to

@@ -1,6 +1,6 @@
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 import { inverse_permutation } from './permutation';
-import { DistanceFunction } from 'distance';
+import { DistanceFunction } from "./distance";
 
 
 // Accorging to

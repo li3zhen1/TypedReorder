@@ -1,5 +1,5 @@
 import { cmp_number } from './utils';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 import { inverse_permutation } from './permutation';
 import { debug } from './core';
 import { count_crossings } from './count_crossings';

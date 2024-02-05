@@ -1,5 +1,5 @@
 import { range } from './range';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 import { inverse_permutation } from './permutation';
 
 export function edgesum<N extends NodeLike, L extends LinkLike<N>>(

@@ -1,4 +1,4 @@
-import { NodeLike, LinkLike, Graph } from '_graph';
+import { NodeLike, LinkLike, Graph } from "./_graph";
 import { zeroes } from './aliases';
 import { assert } from './debug';
 import { inverse_permutation } from './permutation';

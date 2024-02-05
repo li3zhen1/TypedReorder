@@ -1,5 +1,5 @@
 import { Queue } from './queue';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 import { flatten, cmp_number } from './utils';
 
 export function bfs<N extends NodeLike, L extends LinkLike<N>>(

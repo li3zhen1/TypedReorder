@@ -1,7 +1,7 @@
 import { permutation, inverse_permutation } from './permutation';
 import { cmp_number } from './utils';
 import { zeroes } from './aliases';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 
 // Wilhelm Barth, Petra Mutzel, Michael Jünger:
 // Simple and Efficient Bilayer Cross Counting.

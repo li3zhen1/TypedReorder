@@ -1,11 +1,17 @@
 import { debug } from './core';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 import { cmp_number } from './utils';
 
 export type LinkDistance<N extends NodeLike, L extends LinkLike<N>> = number |( (link: L, index: number) => number)
 
-export function graph<N extends NodeLike, L extends LinkLike<N>>(
-    nodes: N[], links: L[], directed: boolean) {
+export function graph<N extends NodeLike = NodeLike, L extends LinkLike<N> = LinkLike<N>>(
+    
+): Graph<N, L>;
+export function graph<N extends NodeLike = NodeLike, L extends LinkLike<N> = LinkLike<N>>(
+    nodes: N[], links: L[], directed: boolean): Graph<N, L>;
+    
+export function graph<N extends NodeLike = NodeLike, L extends LinkLike<N> = LinkLike<N>>(
+    nodes?: N[], links?: L[], directed?: boolean) {
     const graph = {} as Graph<N, L>;
     let linkDistance: LinkDistance<N, L> = 1;
     let edges: L[][];

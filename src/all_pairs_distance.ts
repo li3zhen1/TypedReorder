@@ -1,6 +1,6 @@
 import { infinities } from './utils';
 import { inverse_permutation } from './permutation';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 
 /**
  * Returns a list of distance matrices, computed for the specified

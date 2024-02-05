@@ -2,7 +2,7 @@ import { cmp_number } from './utils';
 import { inverse_permutation } from './permutation';
 import { debug } from './core';
 import { count_crossings } from './count_crossings';
-import { Graph, LinkLike, NodeLike } from '_graph';
+import { Graph, LinkLike, NodeLike } from "./_graph";
 
 export function mult_barycenter_order<N extends NodeLike, L extends LinkLike<N>>(
   graphs: Graph<N, L>[],

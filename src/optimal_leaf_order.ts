@@ -1,8 +1,9 @@
-import { distance as distances } from './distance';
+import { DistanceFunction, distance as distances } from './distance';
 import { debug } from './core';
 import { hcluster } from './hcluster';
 import { printhcluster } from './debug';
 import { dist } from './dist';
+import { NodeLike } from '_graph';
 
 /**
  * optimal dendrogram ordering
@@ -19,14 +20,35 @@ import { dist } from './dist';
  * http://www.cs.cmu.edu/~zivbj/compBio/k-aryBio.pdf
  */
 
+export type TreeLeaf = {
+  id: number;
+  depth: number;
+  left: TreeLeaf;
+  right: TreeLeaf;
+}
+
+export interface OptimalLeafOrder {
+  (matrix: number[][]): number[];
+  order: (v: TreeLeaf) => number[];
+  reorder: (matrix: number[][]) => number[];
+  distance(): DistanceFunction;
+  distance(x: DistanceFunction): OptimalLeafOrder;
+  linkage(): string;
+  linkage(x: string): OptimalLeafOrder;
+  distance_matrix(): number[][];
+  distance_matrix(x: number[][]): OptimalLeafOrder;
+  distanceMatrix(): number[][];
+  distanceMatrix(x: number[][]): OptimalLeafOrder;
+}
+
 export function optimal_leaf_order() {
-  let distanceMatrix: any = null;
+  let distanceMatrix: number[][] | null = null;
   let distance = distances.euclidean;
   let linkage = 'complete';
-  let leavesMap: any = {};
-  let orderMap: any = {};
+  let leavesMap: Record<number, number[]> = {};
+  let orderMap: Record<string, [number, number[]]> = {};
 
-  function leaves(n: any): any {
+  function leaves(n: TreeLeaf): number[] {
     if (n === null) {
       return [];
     }
@@ -36,8 +58,7 @@ export function optimal_leaf_order() {
     return (leavesMap[n.id] = _leaves(n));
   }
 
-  // @ts-ignore
-  function _leaves(n) {
+  function _leaves(n: TreeLeaf): number[] {
     if (n === null) {
       return [];
     }
@@ -46,16 +67,16 @@ export function optimal_leaf_order() {
     }
     return leaves(n.left).concat(leaves(n.right));
   }
-  // @ts-ignore
-  function order(v, i, j) {
+
+  function order(v: TreeLeaf, i: number, j: number) {
     const key = `k${v.id}-${i}-${j}`; // ugly key
     if (key in orderMap) {
       return orderMap[key];
     }
     return (orderMap[key] = _order(v, i, j));
   }
-  // @ts-ignore
-  function _order(v, i, j) {
+
+  function _order(v: TreeLeaf, i: number, j: number): [number, number[]] {
     if (v.depth === 0) {
       return [0, [v.id]];
     }
@@ -89,12 +110,12 @@ export function optimal_leaf_order() {
     }
 
     let min = Infinity;
-    let optimal_order = [];
+    let optimal_order: number[] = [];
 
     for (let k = 0; k < Ks.length; k++) {
       const w_min: any = order(w, i, Ks[k]);
       for (let m = 0; m < Ls.length; m++) {
-        const x_min: any  = order(x, Ls[m], j);
+        const x_min: any = order(x, Ls[m], j);
         const dist = w_min[0] + distanceMatrix[Ks[k]][Ls[m]] + x_min[0];
         if (dist < min) {
           min = dist;
@@ -105,11 +126,11 @@ export function optimal_leaf_order() {
     return [min, optimal_order];
   }
 
-  function orderFull(v: any )  {
+  function orderFull(v: TreeLeaf): number[] {
     leavesMap = {};
     orderMap = {};
     let min = Infinity;
-    let optimal_order = [];
+    let optimal_order: number[] = [];
     const left = leaves(v.left);
     const right = leaves(v.right);
 
@@ -130,17 +151,18 @@ export function optimal_leaf_order() {
     return optimal_order;
   }
 
-  function optimal_leaf_order(matrix: any ) {
+  function optimal_leaf_order(matrix: number[][]) {
     if (distanceMatrix === null) {
       distanceMatrix = (dist().distance(distance) as any)(matrix);
     }
     const cluster = (hcluster().linkage(linkage) as any).distanceMatrix(distanceMatrix);
     return orderFull(cluster(matrix));
   }
+  
   optimal_leaf_order.order = orderFull;
   optimal_leaf_order.reorder = optimal_leaf_order;
 
-  optimal_leaf_order.distance = function (x: any ) {
+  optimal_leaf_order.distance = function (x?: DistanceFunction) {
     if (!arguments.length) {
       return distance;
     }
@@ -149,7 +171,7 @@ export function optimal_leaf_order() {
     return optimal_leaf_order;
   };
 
-  optimal_leaf_order.linkage = function (x: any ) {
+  optimal_leaf_order.linkage = function (x?: string) {
     if (!arguments.length) {
       return linkage;
     }
@@ -157,14 +179,14 @@ export function optimal_leaf_order() {
     return optimal_leaf_order;
   };
 
-  optimal_leaf_order.distance_matrix = function (x: any ) {
+  optimal_leaf_order.distance_matrix = function (x: number[][]) {
     if (!arguments.length) {
       return distanceMatrix;
     }
-    distanceMatrix = x.map((y: any ) => y.slice(0));
+    distanceMatrix = x.map((y) => y.slice(0));
     return optimal_leaf_order;
   };
   optimal_leaf_order.distanceMatrix = optimal_leaf_order.distance_matrix; // compatibility
 
-  return optimal_leaf_order;
+  return optimal_leaf_order as unknown as OptimalLeafOrder;
 }
